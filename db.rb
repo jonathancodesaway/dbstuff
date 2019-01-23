@@ -31,23 +31,24 @@ def create_quizlist_table()
  $conn.exec(createQuizRes(1))
  #prepare statements, inserquiz is to insert a new quiz into quizlist. insertres is to insert new answers into quizans#{id}
  $conn.prepare('insertquiz', 'insert into quizlist (id, info) values ($1, $2)')
- $conn.prepare('insertres', insertQuizRes(1))
+ $conn.prepare('insertres1', insertQuizRes(1))
  $conn.prepare('insertques1', insertQuizQues(1))
  #create the first quiz
  $conn.exec_prepared('insertquiz', [1,'{ "title" : "Which disney princess are you?", "id" : 1 }'])
  $conn.exec_prepared('insertques1', ["Do you like to fight?", '{"yes" : 1, "no" : 0 }'])
- $conn.exec_prepared('insertres', [[1,1], "Mulan"])
- $conn.exec_prepared('insertres', [[0,0], "Bella"])
+ $conn.exec_prepared('insertres1', [[1,1], "Mulan"])
+ $conn.exec_prepared('insertres1', [[0,0], "Bella"])
  #second quiz
  $conn.exec(createQuizQues(2))
  $conn.exec(createQuizRes(2))
  $conn.prepare('insertques2', insertQuizQues(2))
+ $conn.prepare('insertres2', insertQuizRes(2))
  $conn.exec_prepared('insertquiz', [2,'{ "title" : "Which of Ilanas pets are you?", "id" : 2 }'])
  $conn.exec_prepared('insertques2', ["Do you like to eat?", '{"yes" : 1, "no" : 0 }'])
  $conn.exec_prepared('insertques2', ["Are you a doggo or a catto?", '{"yes" : 2, "no" : 0 }'])
- $conn.exec_prepared('insertres', [[2,3], "Dante the dog"])
- $conn.exec_prepared('insertres', [[1,1], "Buddy the Cat"])
- $conn.exec_prepared('insertres', [[0,0], "Steve the cat"])
+ $conn.exec_prepared('insertres2', [[2,3], "Dante the dog"])
+ $conn.exec_prepared('insertres2', [[1,1], "Buddy the Cat"])
+ $conn.exec_prepared('insertres2', [[0,0], "Steve the cat"])
 
 
 end
