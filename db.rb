@@ -36,8 +36,7 @@ def create_quizlist_table()
  #create the first quiz
  $conn.exec_prepared('insertquiz', [1,'{ "title" : "Which disney princess are you?", "id" : 1 }'])
  $conn.exec_prepared('insertques1', ["Do you like to fight?", '{"yes" : 1, "no" : 0 }'])
- $conn.exec_prepared('insertres1', [[1,1], "Mulan"])
- $conn.exec_prepared('insertres1', [[0,0], "Bella"])
+ $conn.exec_prepared('insertres1', ['{"Mulan" : [1], "Bella" : [0] }'])
  #second quiz
  $conn.exec(createQuizQues(2))
  $conn.exec(createQuizRes(2))
@@ -46,15 +45,12 @@ def create_quizlist_table()
  $conn.exec_prepared('insertquiz', [2,'{ "title" : "Which of Ilanas pets are you?", "id" : 2 }'])
  $conn.exec_prepared('insertques2', ["Do you like to eat?", '{"yes" : 1, "no" : 0 }'])
  $conn.exec_prepared('insertques2', ["Are you a doggo or a catto?", '{"yes" : 2, "no" : 0 }'])
- $conn.exec_prepared('insertres2', [[2,3], "Dante the dog"])
- $conn.exec_prepared('insertres2', [[1,1], "Buddy the Cat"])
- $conn.exec_prepared('insertres2', [[0,0], "Steve the cat"])
-
+ $conn.exec_prepared('insertres2', ['{"Dante the dog": [2,3], "Buddy the Cat" : [1], "Steve the Cat" : [0]}'])
 
 end
 
 def insertQuizRes(id)
- temp = "insert into quizres#{id} (search, result) values ($1, $2)"
+ temp = "insert into quizres#{id} (results) values ($1)"
  puts temp
  return temp
 end
@@ -73,7 +69,7 @@ end
 
 def createQuizRes(id)
  puts id
- temp = "create table if not exists quizres#{id}(search int4range, result text)"
+ temp = "create table if not exists quizres#{id}(results json)"
  puts temp
  return temp
 end
